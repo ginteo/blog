@@ -1,5 +1,5 @@
 <template>
-  <button ref="copyRef" class="copy copy-button">
+  <button ref="copyRef" class="copy-button">
     <icons-clipboard-check v-if="state === 'copied'" class="h-5 w-5" />
     <icons-clipboard-copy v-else class="h-5 w-5" />
   </button>
@@ -33,7 +33,7 @@ defineExpose({ copyRef })
 </script>
 
 <style lang="scss" scoped>
-.copy {
-  @apply absolute right-1 top-0 border-white px-2 py-2 font-mono text-xs font-semibold leading-none text-gray-400 shadow-lg focus:outline-none;
+.copy-button {
+  @apply absolute right-1 top-0 hidden  border-white px-2 py-2 font-mono text-xs font-semibold leading-none  text-gray-400 shadow-lg focus:outline-none;
 }
 </style>
