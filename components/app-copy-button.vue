@@ -1,39 +1,19 @@
 <template>
-  <button ref="copyRef" class="copy-button">
-    <icons-clipboard-check v-if="state === 'copied'" class="h-5 w-5" />
-    <icons-clipboard-copy v-else class="h-5 w-5" />
+  <button class="copy-button" @click="$emit('copy', copy)">
+    <icons-clipboard-check v-if="copied" class="h-4 w-4" />
+    <icons-clipboard-copy v-else class="h-4 w-4" />
   </button>
 </template>
 
 <script setup lang="ts">
-import Clipboard from 'clipboard'
+import { useClipboard } from '@vueuse/core'
 
-const state = ref('init')
-const copyRef = ref<HTMLButtonElement>()
-
-onMounted(() => {
-  const copyCode = new Clipboard(copyRef.value, {
-    target(trigger) {
-      return trigger.previousElementSibling
-    }
-  })
-
-  copyCode.on('success', e => {
-    e.clearSelection()
-
-    state.value = 'copied'
-
-    window.setTimeout(() => {
-      state.value = 'init'
-    }, 2000)
-  })
-})
-
-defineExpose({ copyRef })
+const { copy, copied } = useClipboard()
+defineEmits(['copy'])
 </script>
 
 <style lang="scss" scoped>
 .copy-button {
-  @apply absolute right-1 top-0 hidden  border-white px-2 py-2 font-mono text-xs font-semibold leading-none  text-gray-400 shadow-lg focus:outline-none;
+  @apply absolute right-1 top-0 p-[0.5rem] font-mono text-xs font-semibold leading-none focus:outline-none;
 }
 </style>
